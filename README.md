@@ -1,5 +1,5 @@
 # Guide: How to Install APA 7th Edition in Microsoft Word
-# by Kristian Daae-Johanse / IamPhasm 
+## by Kristian Daae-Johanse / IamPhasm 
 Microsoft Word often comes pre-installed with APA 6th Edition, but most universities and publishers now require **APA 7th Edition**. Since Microsoft doesn't always provide an automatic update for this, you can install it manually following these steps.
 
 ---
@@ -7,12 +7,12 @@ Microsoft Word often comes pre-installed with APA 6th Edition, but most universi
 ## 1. Download the Style File
 First, you need the `APASeventhEdition.xsl` file that contains the formatting rules for APA 7.
 
-* **Download:** [APASeventhEdition.xsl @ IamPhasm Github](https://github.com/misterlisty/APA-7th-Edition-Style-for-Microsoft-Word)).
-* *Note: If the link opens a page of code, right-click and select "Save As" to save it as a file.*
+* **Download:** [APASeventhEdition.xsl @ IamPhasm Github](https://raw.githubusercontent.com/iamphasm/APA7-references-word/refs/heads/main/APASeventhEdition.xsl).
+*  **Note: right-click link and select "Save As" to save it as a file.** 
 
 ---
 
-## 2. Locate the Bibliography Folder
+## 2. Locate the Bibliography/Style Folder for Microsoft Word.
 You **must** place the downloaded file into Word's specific "Style" folder. The path depends on your operating system:
 
 ### For Windows:
