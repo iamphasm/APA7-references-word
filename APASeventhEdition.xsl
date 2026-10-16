@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt"	xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns:t="http://www.microsoft.com/temp">
   <xsl:output method="html" encoding="us-ascii"/>
@@ -3304,7 +3304,7 @@
                   </xsl:call-template>
                 </xsl:variable>
 
-                <xsl:variable name="doiPrefix" select="'https://doi.org/'"/>
+                <xsl:variable name="doiPrefix" select="''"/>
 
                 <xsl:variable name="doi">
                   <xsl:call-template name="handleSpaces">
@@ -5597,8 +5597,14 @@
 
                 <xsl:choose>
                   <xsl:when test="string-length($doi)>0">
-                    <xsl:value-of select="$doiPrefix"/>
-                    <xsl:value-of select="$doi"/>
+                    <xsl:choose>
+                      <xsl:when test="starts-with($doi, 'http://') or starts-with($doi, 'https://')">
+                        <xsl:value-of select="$doi"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:value-of select="concat('https://doi.org/', $doi)"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:when>
                   <xsl:when test="string-length($tempRDAFU)>0">
                     <xsl:value-of select="$tempRDAFU"/>
@@ -7095,7 +7101,7 @@
       </xsl:if>
 
       <xsl:if test="string-length(b:InternetSiteTitle)>0 and string-length(b:URL)>0">
-        <xsl:call-template name="templ_prop_EnumSeparator"/>
+        <xsl:text>. </xsl:text>
       </xsl:if>
 
       <xsl:if test="string-length(b:URL)>0">
@@ -7115,52 +7121,14 @@
       <xsl:call-template name="templ_str_FromCap"/>
     </xsl:variable>
 
-    <xsl:variable name="temp">
-      <xsl:choose>
-        <xsl:when test="string-length($dac)>0 and string-length($internetSiteTitleAndURL)>0">
-          <xsl:call-template name="StringFormat">
-            <xsl:with-param name="format" select="$str_RetrievedFromCap"/>
-            <xsl:with-param name="parameters">
-              <t:params>
-                <t:param>
-                  <xsl:value-of select="$dac"/>
-                </t:param>
-                <t:param>
-                  <xsl:value-of select="$internetSiteTitleAndURL"/>
-                </t:param>
-              </t:params>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-
-        <xsl:when test="string-length($dac)>0">
-          <xsl:call-template name="StringFormat">
-            <xsl:with-param name="format" select="$str_RetrievedCap"/>
-            <xsl:with-param name="parameters">
-              <t:params>
-                <t:param>
-                  <xsl:value-of select="$dac"/>
-                </t:param>
-              </t:params>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-
-        <xsl:when test="string-length($internetSiteTitleAndURL)>0">
-          <xsl:call-template name="StringFormat">
-            <xsl:with-param name="format" select="$str_FromCap"/>
-            <xsl:with-param name="parameters">
-              <t:params>
-                <t:param>
-                  <xsl:value-of select="$internetSiteTitleAndURL"/>
-                </t:param>
-              </t:params>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:value-of select="$temp"/>
+    <xsl:choose>
+      <xsl:when test="string-length($dac)>0 and string-length($internetSiteTitleAndURL)>0">
+        <xsl:value-of select="concat('Retrieved ', $dac, ', from ', $internetSiteTitleAndURL)"/>
+      </xsl:when>
+      <xsl:when test="string-length($internetSiteTitleAndURL)>0">
+        <xsl:value-of select="$internetSiteTitleAndURL"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="handleHyphens">
